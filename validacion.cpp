@@ -6,15 +6,63 @@ Fecha::Fecha(int d, int m, int a) {
     anio = a;
 }
 
+Fecha::Fecha(const Fecha& f) {
+    dia = f.dia;
+    mes = f.mes;
+    anio = f.anio;
+}
+
 int Fecha::getDia() {return dia;}
 int Fecha::getMes() {return mes;}
 int Fecha::getAnio() {return anio;}
+
+void Fecha::setDia(int d) {dia = d;}
+void Fecha::setMes(int m) {mes = m;}
+void Fecha::setAnio(int a) {anio = a;}
+
+std::string Fecha::toString() {
+    return std::to_string(dia) + "/" + std::to_string(mes) + "/" + std::to_string(anio);
+}
+
+Fecha Fecha::operator+(int dias) {
+    Fecha copia(*this);
+
+    copia.dia += dias;
+
+    while (copia.dia > dias_en_mes(copia.mes, copia.anio)) {
+        copia.dia -= dias_en_mes(copia.mes, copia.anio);
+        copia.mes++;
+        if (copia.mes > 12) {
+            copia.anio++;
+            copia.mes = 1;
+        }
+    }
+
+    return copia;
+}
+
+Fecha Fecha::operator-(int dias) {
+    Fecha copia(*this);
+    
+    copia.dia -= dias;
+
+    while (copia.dia < 1) {
+        copia.dia += dias_en_mes(copia.mes - 1, copia.anio);
+        copia.mes--;
+        if (copia.mes < 1) {
+            copia.anio--;
+            copia.mes = 12;
+        }
+    }
+
+    return copia;
+}
 
 int numero_entre(int min, int max) {
     int x;
     std::cin >> x;
 
-    while(std::cin.fail() || x < min || x > max) {
+    while (std::cin.fail() || x < min || x > max) {
         std::cin.clear();
         std::cin.ignore(9223372036854775807,'\n');
         std::cout << "Entrada invalida, ingrese un numero entre " << min << " - " << max << ": ";
@@ -30,7 +78,7 @@ int numero_validado() {
     int x;
     std::cin >> x;
 
-    while(std::cin.fail()) {
+    while (std::cin.fail()) {
         std::cin.clear();
         std::cin.ignore(9223372036854775807,'\n');
         std::cout << "Entrada invalida, ingrese un numero: ";
@@ -42,24 +90,25 @@ int numero_validado() {
     return x;
 }
 
-bool validar_fecha(Fecha fec) {
-    bool b = fec.getDia() > 0;
-
-    switch (fec.getMes()) {
+int dias_en_mes(int mes, int anio) {
+    switch (mes) {
         case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            return b && fec.getDia() <= 31;
+            return 31;
         case 4: case 6: case 9: case 11:
-            return b && fec.getDia() <= 30;
+            return 30;
         case 2:
             // es año bisiesto
-            if ((fec.getAnio()%4 == 0 && fec.getAnio()%100 != 0) || fec.getAnio()%400 == 0) {
-                return b && fec.getDia() <= 29;
+            if ((anio%4 == 0 && anio%100 != 0) || anio%400 == 0) {
+                return 29;
             } 
-            
-            return b && fec.getDia() <= 28;
+            return 28;
         default:
-            return false;
+            return -1;
     }
+}
+
+bool validar_fecha(Fecha fec) {
+    return fec.getDia() > 0 && fec.getDia() <= dias_en_mes(fec.getMes(), fec.getAnio());
 }
 
 Fecha fecha_validada() {
@@ -74,6 +123,7 @@ Fecha fecha_validada() {
         mes = numero_entre(1, 12);
 
         std::cout << "\tAño: ";
+        // ajustar según la necesidad
         anio = numero_entre(1940, 2030);
 
         fec = new Fecha(dia, mes, anio);
@@ -83,4 +133,8 @@ Fecha fecha_validada() {
             return *fec;
         }
     }
+}
+
+void esperar(int segundos) {
+    sleep(segundos);
 }

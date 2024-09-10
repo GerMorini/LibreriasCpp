@@ -1,8 +1,8 @@
 #ifndef VALIDACION_H
 #define VALIDACION_H
 
-#include <cstdio>
 #include <iostream>
+#include <unistd.h>
 #include <fstream>
 
 class Fecha {
@@ -11,14 +11,25 @@ class Fecha {
     public:
         Fecha();
         Fecha(int d, int m, int a);
+        Fecha(const Fecha& f);
 
         int getDia();
         int getMes();
         int getAnio();
 
-        // define como imprimir fecha
+        void setDia(int d);
+        void setMes(int m);
+        void setAnio(int a);
+
+        // usar este para imprimir en pantalla
+        std::string toString();
+
+        Fecha operator+(int dias);
+        Fecha operator-(int dias);
+
+        // define como imprimir fecha (para almacenar en archivos)
         friend std::ostream& operator<<(std::ostream& os, const Fecha& fec) {
-            os << fec.dia << "/" << fec.mes << "/" << fec.anio;
+            os << fec.dia << " " << fec.mes << " " << fec.anio;
             return os;
         }
 
@@ -31,7 +42,9 @@ class Fecha {
    
 int numero_entre(int min, int max);
 int numero_validado();
+int dias_en_mes(int mes, int anio);
 bool validar_fecha(Fecha fec);
 Fecha fecha_validada();
+void esperar(int segundos);
 
 #endif // VALIDACION_H
