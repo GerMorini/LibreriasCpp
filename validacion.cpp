@@ -41,6 +41,12 @@ Fecha Fecha::operator+(int dias) {
     return copia;
 }
 
+Fecha& Fecha::operator+=(int dias) {
+    *this = *this + dias;
+
+    return *this;
+}
+
 Fecha Fecha::operator-(int dias) {
     Fecha copia(*this);
     
@@ -57,6 +63,31 @@ Fecha Fecha::operator-(int dias) {
 
     return copia;
 }
+
+Fecha& Fecha::operator-=(int dias) {
+    *this = *this - dias;
+
+    return *this;
+}
+
+bool Fecha::operator==(Fecha& fec) {return dia == fec.dia && mes == fec.mes && anio == fec.anio;}
+bool Fecha::operator!=(Fecha& fec) {return !(*this == fec);}
+
+bool Fecha::operator<(Fecha& fec) {
+    return (anio < fec.anio) ||
+           (anio == fec.anio && mes < fec.mes) ||
+           (anio == fec.anio && mes == fec.mes && dia < fec.dia);
+}
+
+bool Fecha::operator<=(Fecha& fec) {return *this < fec || *this == fec;}
+
+bool Fecha::operator>(Fecha& fec) {
+    return (anio > fec.anio) ||
+           (anio == fec.anio && mes > fec.mes) ||
+           (anio == fec.anio && mes == fec.mes && dia > fec.dia);
+}
+
+bool Fecha::operator>=(Fecha& fec) {return *this > fec || *this == fec;}
 
 int numero_entre(int min, int max) {
     int x;
@@ -90,6 +121,10 @@ int numero_validado() {
     return x;
 }
 
+bool es_bisiesto(int anio) {
+    return (anio%4 == 0 && anio%100 != 0) || anio%400 == 0;
+}
+
 int dias_en_mes(int mes, int anio) {
     switch (mes) {
         case 1: case 3: case 5: case 7: case 8: case 10: case 12:
@@ -98,7 +133,7 @@ int dias_en_mes(int mes, int anio) {
             return 30;
         case 2:
             // es año bisiesto
-            if ((anio%4 == 0 && anio%100 != 0) || anio%400 == 0) {
+            if (es_bisiesto(anio)) {
                 return 29;
             } 
             return 28;
