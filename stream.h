@@ -1,4 +1,8 @@
-#include "./stream_generico.h"
+#ifndef STREAM_H
+#define STREAM_H
+
+#include <vector>
+#include <fstream>
 
 /*
     Hay que definir los siguientes metodos en las clases que necesitemos guardar
@@ -19,7 +23,6 @@
 
         return is;
     }
-
 */
 
 template<class T>
@@ -54,3 +57,5 @@ void guardar(std::vector<T>& l, std::string path_archivo) {
 
     file.close();
 }
+
+#endif // STREAM_H

@@ -13,6 +13,11 @@ class Fecha {
         Fecha(int d, int m, int a);
         Fecha(const Fecha& f);
 
+        // sirven para ajustar el máximo/mínimo de años
+        // permitidos en el ingreso de una fecha
+        static int MINIMO_ANIO;
+        static int MAXIMO_ANIO;
+
         int getDia();
         int getMes();
         int getAnio();
@@ -55,7 +60,7 @@ int numero_entre(int min, int max);
 int numero_validado();
 bool es_bisiesto(int anio);
 int dias_en_mes(int mes, int anio);
-bool validar_fecha(Fecha fec);
+bool validar_fecha(Fecha& fec);
 Fecha fecha_validada();
 void esperar(int segundos);
 

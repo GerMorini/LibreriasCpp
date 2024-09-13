@@ -1,5 +1,7 @@
 #include "validacion.h"
 
+Fecha::Fecha() {}
+
 Fecha::Fecha(int d, int m, int a) {
     dia = d;
     mes = m;
@@ -11,6 +13,9 @@ Fecha::Fecha(const Fecha& f) {
     mes = f.mes;
     anio = f.anio;
 }
+
+int Fecha::MINIMO_ANIO = 0;
+int Fecha::MAXIMO_ANIO = 2030;
 
 int Fecha::getDia() {return dia;}
 int Fecha::getMes() {return mes;}
@@ -142,7 +147,7 @@ int dias_en_mes(int mes, int anio) {
     }
 }
 
-bool validar_fecha(Fecha fec) {
+bool validar_fecha(Fecha& fec) {
     return fec.getDia() > 0 && fec.getDia() <= dias_en_mes(fec.getMes(), fec.getAnio());
 }
 
@@ -158,8 +163,7 @@ Fecha fecha_validada() {
         mes = numero_entre(1, 12);
 
         std::cout << "\tAño: ";
-        // ajustar según la necesidad
-        anio = numero_entre(1940, 2030);
+        anio = numero_entre(Fecha::MINIMO_ANIO, Fecha::MAXIMO_ANIO);
 
         fec = new Fecha(dia, mes, anio);
         if (!validar_fecha(*fec)) {

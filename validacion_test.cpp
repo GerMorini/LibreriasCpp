@@ -8,13 +8,13 @@ void testConstructor() {
     assert(f.getDia() == 10);
     assert(f.getMes() == 5);
     assert(f.getAnio() == 2022);
-    std::cout << "testConstructor \033[32mOK\033[0m.\n";
+    std::cout << "testConstructor \033[32mOK\033[0m\n";
 }
 
 void testToString() {
     Fecha f(10, 5, 2022);
     assert(f.toString() == "10/5/2022");
-    std::cout << "testToString \033[32mOK\033[0m.\n";
+    std::cout << "testToString \033[32mOK\033[0m\n";
 }
 
 void testOperatorSum() {
@@ -29,7 +29,7 @@ void testOperatorSum() {
     assert(resultado.getMes() == 3);
     assert(resultado.getAnio() == 2020);
 
-    std::cout << "testOperatorSum \033[32mOK\033[0m.\n";
+    std::cout << "testOperatorSum \033[32mOK\033[0m\n";
 }
 
 void testOperatorSubtraction() {
@@ -44,7 +44,7 @@ void testOperatorSubtraction() {
     assert(resultado.getMes() == 2);
     assert(resultado.getAnio() == 2020);
 
-    std::cout << "testOperatorSubtraction \033[32mOK\033[0m.\n";
+    std::cout << "testOperatorSubtraction \033[32mOK\033[0m\n";
 }
 
 void testComparisons() {
@@ -58,7 +58,7 @@ void testComparisons() {
     assert(!(f1 == f2));
     assert(f1 != f2);
 
-    std::cout << "testComparisons \033[32mOK\033[0m.\n";
+    std::cout << "testComparisons \033[32mOK\033[0m\n";
 }
 
 int main() {
@@ -68,6 +68,6 @@ int main() {
     testOperatorSubtraction();
     testComparisons();
 
-    std::cout << "All tests \033[32mOK\033[0m.\n";
+    std::cout << "All tests \033[32mOK\033[0m\n";
     return 0;
 }
