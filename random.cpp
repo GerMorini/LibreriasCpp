@@ -19,11 +19,34 @@ std::string aleatorio(std::string base_de_datos[]) {
     return base_de_datos[rand()%100];
 }
 
-Fecha fecha_aleatoria() {
+int numero_aleatorio(int min, int max) {
+    return min + rand()%(max - min);
+}
+
+/*
+    Genera una fecha aleatoria entre los años, meses y dias especificados
+    *Recordar que primero se especifica el maximo y luego el minimo*
+    Ejemplos:
+    
+    @code
+    
+    fecha_aleatoria(1940)                       // genera una fecha con años entre 0-1940
+    fecha_aleatoria(311, -100)                  // genera una fecha con años entre -100-311
+    fecha_aleatoria(2030, 1970, 5)              // años entre 1970-2030 y hasta el mes 5
+    fecha_aleatoria(2010, 1990, 12, 6, 31, 15)  // años entre 1990-2010, los ultimos 6 meses y 15 dias de cada mes
+
+    @endcode
+*/
+Fecha fecha_aleatoria(int anio_max = 2030, int anio_min = 0, int mes_max = 12, int mes_min = 1, int dia_max = 31, int dia_min = 1) {
     Fecha fec;
     do {
-        fec = Fecha(rand()%31, rand()%12, Fecha::MINIMO_ANIO + rand()%(Fecha::MAXIMO_ANIO - Fecha::MINIMO_ANIO));
+        fec = Fecha(
+            numero_aleatorio(dia_min, dia_max),
+            numero_aleatorio(mes_min, mes_max),
+            numero_aleatorio(anio_min, anio_max)
+        );
     } while (!validar_fecha(fec));
 
     return fec;
 }
+

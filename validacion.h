@@ -13,11 +13,6 @@ class Fecha {
         Fecha(int d, int m, int a);
         Fecha(const Fecha& f);
 
-        // sirven para ajustar el máximo/mínimo de años
-        // permitidos en el ingreso de una fecha
-        static int MINIMO_ANIO;
-        static int MAXIMO_ANIO;
-
         int getDia();
         int getMes();
         int getAnio();

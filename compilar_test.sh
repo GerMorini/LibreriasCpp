@@ -4,7 +4,7 @@ mkdir -p exec
 
 cmd=(
     'g++ -Wall -g -o exec/val_test validacion.cpp validacion_test.cpp'
-    'g++ -Wall -g -o exec/stream_test stream.h stream_test.cpp validacion.cpp'
+    'g++ -Wall -g -o exec/stream_test stream_test.cpp validacion.cpp'
 )
 
 for c in "${cmd[@]}"; do 
