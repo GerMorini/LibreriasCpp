@@ -58,5 +58,8 @@ int dias_en_mes(int mes, int anio);
 bool validar_fecha(Fecha& fec);
 Fecha fecha_validada();
 void esperar(int segundos);
+std::string color_fuente(std::string txt, int color);
+std::string color_fondo(std::string txt, int color);
+void limpiar_consola();
 
 #endif // VALIDACION_H

@@ -174,3 +174,58 @@ Fecha fecha_validada(int anio_max = 2030, int anio_min = 0) {
 void esperar(int segundos) {
     sleep(segundos);
 }
+
+/**
+Colores disponibles:
+    0 \033[0m    # Resetea el color y el formato (de caulquier tipo)
+    1 \033[30m   # negro
+    2 \033[31m   # rojo
+    3 \033[32m   # verde
+    4 \033[33m   # amarillo
+    5 \033[34m   # azul
+    6 \033[35m   # magenta
+    7 \033[36m   # cian
+    8 \033[37m   # blanco
+ */
+std::string color_fuente(std::string txt, int color) {
+    if (color < 0 or color > 8) return txt;
+
+    std::string COLORES[] = {
+    "\033[0m",
+    "\033[30m",
+    "\033[31m",
+    "\033[32m",
+    "\033[33m",
+    "\033[34m",
+    "\033[35m",
+    "\033[36m",
+    "\033[37m"
+    };
+
+    return COLORES[color] + txt + COLORES[0];
+}
+
+/**
+Los colores son los mismos que en el método anterior
+ */
+std::string color_fondo(std::string txt, int color) {
+    if (color < 0 or color > 8) return txt;
+
+    std::string COLORES[] = {
+    "\033[0m",
+    "\033[40m",
+    "\033[41m",
+    "\033[42m",
+    "\033[43m",
+    "\033[44m",
+    "\033[45m",
+    "\033[46m",
+    "\033[47m"
+    };
+
+    return COLORES[color] + txt + COLORES[0];
+}
+
+void limpiar_consola() {
+    std::cout << "\033[H\033[2J";
+}
