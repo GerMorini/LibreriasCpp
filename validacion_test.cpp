@@ -4,10 +4,15 @@
 #include <iostream>
 
 void testConstructor() {
-    Fecha f(10, 5, 2022);
-    assert(f.getDia() == 10);
-    assert(f.getMes() == 5);
-    assert(f.getAnio() == 2022);
+    Fecha f1(10, 5, 2022);
+    Fecha f2("10/5/2022");
+    assert(f1.getDia() == 10);
+    assert(f1.getMes() == 5);
+    assert(f1.getAnio() == 2022);
+    assert(f2.getDia() == 10);
+    assert(f2.getMes() == 5);
+    assert(f2.getAnio() == 2022);
+    assert(f1 == f2);
     std::cout << "testConstructor \033[32mOK\033[0m\n";
 }
 

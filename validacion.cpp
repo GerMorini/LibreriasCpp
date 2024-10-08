@@ -1,3 +1,4 @@
+#include <sstream>
 #include "validacion.h"
 
 Fecha::Fecha() {}
@@ -12,6 +13,12 @@ Fecha::Fecha(const Fecha& f) {
     dia = f.dia;
     mes = f.mes;
     anio = f.anio;
+}
+
+Fecha::Fecha(const std::string f) {
+    std::stringstream ss(f);
+    char barrita;
+    ss >> dia >> barrita >> mes >> barrita >> anio;
 }
 
 int Fecha::getDia() {return dia;}

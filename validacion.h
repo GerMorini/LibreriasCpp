@@ -12,6 +12,7 @@ class Fecha {
         Fecha();
         Fecha(int d, int m, int a);
         Fecha(const Fecha& f);
+        Fecha(const std::string f);
 
         int getDia();
         int getMes();
