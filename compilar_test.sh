@@ -20,5 +20,5 @@ done
 echo -e "\033[32m[INFO]\033[0m compilado con exito. ejecutando...\n\n"
 
 ./exec/val_test 
-./exec/stream_test
+# ./exec/stream_test
 

@@ -1,102 +1,8 @@
-#include <sstream>
 #include "validacion.h"
-
-Fecha::Fecha() {}
-
-Fecha::Fecha(int d, int m, int a) {
-    dia = d;
-    mes = m;
-    anio = a;
-}
-
-Fecha::Fecha(const Fecha& f) {
-    dia = f.dia;
-    mes = f.mes;
-    anio = f.anio;
-}
-
-Fecha::Fecha(const std::string f) {
-    std::stringstream ss(f);
-    char barrita;
-    ss >> dia >> barrita >> mes >> barrita >> anio;
-}
-
-int Fecha::getDia() {return dia;}
-int Fecha::getMes() {return mes;}
-int Fecha::getAnio() {return anio;}
-
-void Fecha::setDia(int d) {dia = d;}
-void Fecha::setMes(int m) {mes = m;}
-void Fecha::setAnio(int a) {anio = a;}
 
 std::string Fecha::toString() {
     return std::to_string(dia) + "/" + std::to_string(mes) + "/" + std::to_string(anio);
 }
-
-Fecha Fecha::operator+(int dias) {
-    Fecha copia(*this);
-
-    copia.dia += dias;
-
-    while (copia.dia > dias_en_mes(copia.mes, copia.anio)) {
-        copia.dia -= dias_en_mes(copia.mes, copia.anio);
-        copia.mes++;
-        if (copia.mes > 12) {
-            copia.anio++;
-            copia.mes = 1;
-        }
-    }
-
-    return copia;
-}
-
-Fecha& Fecha::operator+=(int dias) {
-    *this = *this + dias;
-
-    return *this;
-}
-
-Fecha Fecha::operator-(int dias) {
-    Fecha copia(*this);
-    
-    copia.dia -= dias;
-
-    while (copia.dia < 1) {
-        copia.dia += dias_en_mes(copia.mes - 1, copia.anio);
-        copia.mes--;
-        if (copia.mes < 1) {
-            copia.anio--;
-            copia.mes = 12;
-        }
-    }
-
-    return copia;
-}
-
-Fecha& Fecha::operator-=(int dias) {
-    *this = *this - dias;
-
-    return *this;
-}
-
-bool Fecha::operator==(Fecha& fec) {return dia == fec.dia && mes == fec.mes && anio == fec.anio;}
-bool Fecha::operator!=(Fecha& fec) {return !(*this == fec);}
-
-bool Fecha::operator<(Fecha& fec) {
-    return (anio < fec.anio) ||
-           (anio == fec.anio && mes < fec.mes) ||
-           (anio == fec.anio && mes == fec.mes && dia < fec.dia);
-}
-
-bool Fecha::operator<=(Fecha& fec) {return *this < fec || *this == fec;}
-
-bool Fecha::operator>(Fecha& fec) {
-    return (anio > fec.anio) ||
-           (anio == fec.anio && mes > fec.mes) ||
-           (anio == fec.anio && mes == fec.mes && dia > fec.dia);
-}
-
-bool Fecha::operator>=(Fecha& fec) {return *this > fec || *this == fec;}
 
 int numero_entre(int min, int max) {
     int x;
@@ -114,6 +20,27 @@ int numero_entre(int min, int max) {
     return x;
 }
 
+float numero_entreFloat(float min, float max) {
+    float x;
+    std::cin >> x;
+
+    while (std::cin.fail() || x < 0 || x > max) {
+        std::cin.clear();
+        std::cin.ignore(9223372036854775807,'\n');
+        std::cout << "Entrada invalida, ingrese un numero mayor que 0 y menor que " << max << ": ";
+        std::cin >> x;
+
+        // borra la linea anterior
+        std::cout << "\033[F\033[2K";
+    }
+    return x;
+}
+
+float truncar(float valor, int decimales) {
+    float factor = std::pow(10.0, decimales);
+    return std::trunc(valor * factor) / factor;
+}
+
 int numero_validado() {
     int x;
     std::cin >> x;
@@ -129,6 +56,8 @@ int numero_validado() {
     }
     return x;
 }
+
+
 
 bool es_bisiesto(int anio) {
     return (anio%4 == 0 && anio%100 != 0) || anio%400 == 0;
@@ -178,21 +107,22 @@ Fecha fecha_validada(int anio_max = 2030, int anio_min = 0) {
     }
 }
 
+
 void esperar(int segundos) {
     sleep(segundos);
 }
 
 /**
 Colores disponibles:
-    0 \033[0m    # Resetea el color y el formato (de caulquier tipo)
-    1 \033[30m   # negro
-    2 \033[31m   # rojo
-    3 \033[32m   # verde
-    4 \033[33m   # amarillo
-    5 \033[34m   # azul
-    6 \033[35m   # magenta
-    7 \033[36m   # cian
-    8 \033[37m   # blanco
+    0 Resetea el color y el formato (de caulquier tipo)
+    1 negro
+    2 rojo
+    3 verde
+    4 amarillo
+    5 azul
+    6 magenta
+    7 cian
+    8 blanco
  */
 std::string color_fuente(std::string txt, int color) {
     if (color < 0 or color > 8) return txt;
@@ -235,4 +165,15 @@ std::string color_fondo(std::string txt, int color) {
 
 void limpiar_consola() {
     std::cout << "\033[H\033[2J";
+}
+
+unsigned int simpleHash(std::string& str) {
+    unsigned int hash = 0;
+    const unsigned int prime = 31;
+
+    for (char c : str) {
+        hash = hash * prime + static_cast<unsigned int>(c);
+    }
+
+    return hash;
 }

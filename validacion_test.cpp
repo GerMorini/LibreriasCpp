@@ -73,6 +73,6 @@ int main() {
     testOperatorSubtraction();
     testComparisons();
 
-    std::cout << "All tests \033[32mOK\033[0m\n";
+    std::cout << "Todos los test de validacion \033[32mOK\033[0m\n";
     return 0;
 }
